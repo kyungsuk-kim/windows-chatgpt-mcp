@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows ChatGPT MCP Tool - 설치 및 사용 가이드</title>
+    <title>Windows ChatGPT MCP Tool - 완전한 설치 및 사용 가이드</title>
+    <meta name="description" content="Windows ChatGPT MCP Tool의 완전한 설치, 배포, 사용 가이드. Claude Desktop과 VS Code에서 ChatGPT를 사용하는 방법을 자세히 설명합니다.">
+    <meta name="keywords" content="Windows, ChatGPT, MCP, Claude, VS Code, 설치, 가이드, 자동화">
+    <meta name="author" content="Windows ChatGPT MCP Tool Team">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzM0OThkYiIvPgo8cGF0aCBkPSJNOCAxNmMwLTQuNDE4IDMuNTgyLTggOC04czggMy41ODIgOCA4LTMuNTgyIDgtOCA4LTgtMy41ODItOC04eiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==">
     <style>
         * {
             margin: 0;
@@ -74,7 +78,12 @@
         
         .nav a:hover {
             background: #3498db;
-        }        
+        }
+        
+        .nav a.active {
+            background: #3498db;
+            font-weight: bold;
+        }
 
         .content {
             padding: 2rem;
@@ -254,6 +263,46 @@
             padding: 2rem;
         }
         
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -275,41 +324,137 @@
             .section {
                 padding: 1rem;
             }
+            
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="progress-bar" id="progressBar"></div>
+    <button class="back-to-top" id="backToTop" title="맨 위로">↑</button>
+    
     <div class="container">
         <header class="header">
-            <h1>Windows ChatGPT MCP Tool</h1>
-            <p>설치, 배포, 사용 가이드</p>
+            <h1>🚀 Windows ChatGPT MCP Tool</h1>
+            <p>완전한 설치, 배포, 사용 가이드</p>
+            <div style="margin-top: 1rem;">
+                <a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp" target="_blank" class="btn btn-success">
+                    📁 GitHub 저장소
+                </a>
+                <a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp/releases" target="_blank" class="btn">
+                    📦 다운로드
+                </a>
+            </div>
         </header>
         
         <nav class="nav">
             <ul>
-                <li><a href="#requirements">시스템 요구사항</a></li>
-                <li><a href="#installation">설치</a></li>
-                <li><a href="#configuration">설정</a></li>
-                <li><a href="#usage">사용법</a></li>
-                <li><a href="#troubleshooting">문제해결</a></li>
-                <li><a href="#distribution">배포</a></li>
+                <li><a href="#overview">📋 개요</a></li>
+                <li><a href="#requirements">⚙️ 시스템 요구사항</a></li>
+                <li><a href="#installation">💾 설치</a></li>
+                <li><a href="#configuration">🔧 설정</a></li>
+                <li><a href="#usage">🎯 사용법</a></li>
+                <li><a href="#troubleshooting">🔍 문제해결</a></li>
+                <li><a href="#distribution">📦 배포</a></li>
+                <li><a href="#advanced">🚀 고급 기능</a></li>
             </ul>
         </nav>
         
         <main class="content">
             <section id="overview" class="section">
-                <h2>개요</h2>
+                <h2>📋 개요</h2>
                 <p>Windows ChatGPT MCP Tool은 Claude Desktop과 VS Code Claude CLI가 Windows 11 시스템에서 ChatGPT와 상호작용할 수 있게 해주는 Model Context Protocol (MCP) 서버입니다.</p>
                 
-                <h3>주요 기능</h3>
-                <ul>
-                    <li>🔗 <strong>원활한 통합</strong> - MCP 프로토콜을 통해 Claude와 ChatGPT 연결</li>
-                    <li>🪟 <strong>Windows 네이티브</strong> - Windows 11/10에 최적화된 강력한 자동화</li>
-                    <li>🛠️ <strong>다양한 도구</strong> - 메시지 전송, 대화 관리, 디버그 정보 제공</li>
-                    <li>📊 <strong>성능 모니터링</strong> - 내장된 메트릭 및 로깅</li>
-                    <li>🔧 <strong>간편한 설정</strong> - Claude Desktop 및 VS Code와 호환</li>
-                    <li>🛡️ <strong>오류 처리</strong> - 포괄적인 오류 복구 및 재시도 로직</li>
-                </ul>
+                <div class="info">
+                    <h4>🎯 이 도구의 목적</h4>
+                    <p>Claude의 분석적 능력과 ChatGPT의 지식 및 대화 능력을 결합하여 최고의 AI 시스템을 활용할 수 있게 합니다. 하나의 워크플로우에서 두 AI의 장점을 모두 활용하세요.</p>
+                </div>
+                
+                <h3>🌟 주요 기능</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                    <div class="success" style="padding: 1rem;">
+                        <h4>🔗 원활한 통합</h4>
+                        <p>MCP 프로토콜을 통해 Claude와 ChatGPT를 완벽하게 연결합니다.</p>
+                    </div>
+                    <div class="info" style="padding: 1rem;">
+                        <h4>🪟 Windows 네이티브</h4>
+                        <p>Windows 11/10에 최적화된 강력한 자동화 기능을 제공합니다.</p>
+                    </div>
+                    <div class="warning" style="padding: 1rem;">
+                        <h4>🛠️ 다양한 도구</h4>
+                        <p>메시지 전송, 대화 관리, 디버그 정보 등 다양한 기능을 제공합니다.</p>
+                    </div>
+                    <div class="success" style="padding: 1rem;">
+                        <h4>📊 성능 모니터링</h4>
+                        <p>내장된 메트릭 및 로깅으로 성능을 실시간 모니터링합니다.</p>
+                    </div>
+                    <div class="info" style="padding: 1rem;">
+                        <h4>🔧 간편한 설정</h4>
+                        <p>Claude Desktop 및 VS Code와 완벽하게 호환됩니다.</p>
+                    </div>
+                    <div class="warning" style="padding: 1rem;">
+                        <h4>🛡️ 강력한 오류 처리</h4>
+                        <p>포괄적인 오류 복구 및 재시도 로직을 제공합니다.</p>
+                    </div>
+                </div>
+
+                <h3>🏗️ 아키텍처 개요</h3>
+                <div class="info">
+                    <p>이 도구는 다음과 같은 구조로 작동합니다:</p>
+                    <ol>
+                        <li><strong>Claude Client</strong> (Desktop/VS Code) → MCP 프로토콜로 요청 전송</li>
+                        <li><strong>Windows ChatGPT MCP Server</strong> → 요청 처리 및 검증</li>
+                        <li><strong>Windows 자동화 레이어</strong> → ChatGPT 데스크톱 앱과 상호작용</li>
+                        <li><strong>ChatGPT Desktop App</strong> → 실제 AI 처리 및 응답</li>
+                        <li><strong>응답 경로</strong> → 역순으로 Claude에게 결과 전달</li>
+                    </ol>
+                </div>
+
+                <h3>🎯 사용 사례</h3>
+                <table>
+                    <tr>
+                        <th>사용 사례</th>
+                        <th>설명</th>
+                        <th>장점</th>
+                    </tr>
+                    <tr>
+                        <td>🔬 연구 및 분석</td>
+                        <td>복잡한 주제에 대한 다각적 관점 확보</td>
+                        <td>Claude의 분석력 + ChatGPT의 지식</td>
+                    </tr>
+                    <tr>
+                        <td>💻 코드 리뷰</td>
+                        <td>코드에 대한 포괄적인 피드백</td>
+                        <td>두 AI의 서로 다른 접근 방식</td>
+                    </tr>
+                    <tr>
+                        <td>✍️ 창작 협업</td>
+                        <td>창의적 프로젝트의 협업 작업</td>
+                        <td>다양한 창작 스타일과 아이디어</td>
+                    </tr>
+                    <tr>
+                        <td>🛠️ 문제 해결</td>
+                        <td>기술적 도전에 대한 다양한 솔루션</td>
+                        <td>여러 관점의 해결책 비교</td>
+                    </tr>
+                    <tr>
+                        <td>📚 학습 지원</td>
+                        <td>포괄적인 교육 콘텐츠 제공</td>
+                        <td>다양한 설명 방식과 예시</td>
+                    </tr>
+                </table>
+
+                <div class="success">
+                    <h4>🚀 시작할 준비가 되셨나요?</h4>
+                    <p>아래 단계별 가이드를 따라 몇 분 안에 설정을 완료하고 두 AI의 강력한 조합을 경험해보세요!</p>
+                    <a href="#requirements" class="btn">시작하기 →</a>
+                </div>
             </section>       
      
             <section id="requirements" class="section requirements">
@@ -743,7 +888,261 @@ python -m src.mcp_server --verbose --debug</div>
                     <li>시스템 리소스 모니터링</li>
                     <li>적절한 타임아웃 값 사용</li>
                 </ul>
-            </section>    
+            </section>
+
+            <section id="distribution" class="section" style="background: linear-gradient(135deg, #f0f8e8 0%, #e8f5e8 100%);">
+                <h2>📦 배포</h2>
+                
+                <h3>🎯 배포 옵션</h3>
+                <p>Windows ChatGPT MCP Tool은 다양한 형태로 배포됩니다:</p>
+                
+                <table>
+                    <tr>
+                        <th>배포 형태</th>
+                        <th>파일명</th>
+                        <th>설명</th>
+                        <th>사용 시나리오</th>
+                    </tr>
+                    <tr>
+                        <td>🐍 Python 패키지</td>
+                        <td>windows_chatgpt_mcp-1.0.0-py3-none-any.whl</td>
+                        <td>표준 Python 패키지</td>
+                        <td>개발자, Python 환경 보유</td>
+                    </tr>
+                    <tr>
+                        <td>📁 소스 배포</td>
+                        <td>windows_chatgpt_mcp-1.0.0.tar.gz</td>
+                        <td>소스 코드 아카이브</td>
+                        <td>커스터마이징, 기여</td>
+                    </tr>
+                    <tr>
+                        <td>⚡ 독립 실행파일</td>
+                        <td>windows-chatgpt-mcp.exe</td>
+                        <td>Python 설치 불필요</td>
+                        <td>일반 사용자, 간편 설치</td>
+                    </tr>
+                </table>
+                
+                <h3>🏗️ 소스에서 빌드하기</h3>
+                <p>자체 배포 패키지를 빌드하려면:</p>
+                
+                <h4>모든 패키지 빌드</h4>
+                <div class="code-block">python build_dist.py</div>
+                
+                <h4>휠 패키지만 빌드</h4>
+                <div class="code-block">python build_dist.py --wheel-only</div>
+                
+                <h4>독립 실행파일만 빌드</h4>
+                <div class="code-block">python build_dist.py --exe-only</div>
+                
+                <div class="info">
+                    <h4>📋 빌드 요구사항</h4>
+                    <ul>
+                        <li>Python 3.8 이상</li>
+                        <li>setuptools, wheel 패키지</li>
+                        <li>PyInstaller (실행파일 빌드용)</li>
+                        <li>충분한 디스크 공간 (최소 1GB)</li>
+                    </ul>
+                </div>
+                
+                <h3>🌐 GitHub 저장소</h3>
+                <div class="success">
+                    <h4>📍 저장소 정보</h4>
+                    <p><strong>URL:</strong> <a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp" target="_blank">https://github.com/kyungsuk-kim/windows-chatgpt-mcp</a></p>
+                    <p><strong>라이선스:</strong> MIT License</p>
+                    <p><strong>언어:</strong> Python</p>
+                    <p><strong>플랫폼:</strong> Windows 11/10</p>
+                </div>
+                
+                <h4>🔄 저장소 복제</h4>
+                <div class="code-block">git clone https://github.com/kyungsuk-kim/windows-chatgpt-mcp.git
+cd windows-chatgpt-mcp</div>
+                
+                <h4>🏷️ 릴리스 다운로드</h4>
+                <p>최신 릴리스는 <a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp/releases" target="_blank">GitHub 릴리스 페이지</a>에서 다운로드할 수 있습니다.</p>
+                
+                <h3>🚀 팀 배포</h3>
+                <p>조직이나 팀에서 사용하려면:</p>
+                
+                <h4>1. 중앙 집중식 설치</h4>
+                <div class="code-block"># 네트워크 공유 위치에 설치
+\\server\shared\tools\windows-chatgpt-mcp\
+
+# 사용자별 설정 파일 배포
+copy mcp_config_template.json %APPDATA%\Claude\mcp.json</div>
+                
+                <h4>2. 자동화된 배포 스크립트</h4>
+                <div class="code-block">python examples/deployment_scripts/deploy_to_team.py</div>
+                
+                <div class="warning">
+                    <h4>⚠️ 기업 환경 고려사항</h4>
+                    <ul>
+                        <li>보안 정책 및 방화벽 설정 확인</li>
+                        <li>바이러스 백신 예외 설정</li>
+                        <li>사용자 권한 및 접근 제어</li>
+                        <li>네트워크 정책 및 프록시 설정</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="advanced" class="section" style="background: linear-gradient(135deg, #e8e8ff 0%, #f0f0ff 100%);">
+                <h2>🚀 고급 기능</h2>
+                
+                <h3>🔧 고급 설정</h3>
+                
+                <h4>환경 변수 완전 가이드</h4>
+                <table>
+                    <tr>
+                        <th>변수명</th>
+                        <th>설명</th>
+                        <th>기본값</th>
+                        <th>예시</th>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_LOG_LEVEL</td>
+                        <td>로깅 수준</td>
+                        <td>INFO</td>
+                        <td>DEBUG, INFO, WARNING, ERROR</td>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_TIMEOUT</td>
+                        <td>응답 대기 시간(초)</td>
+                        <td>30</td>
+                        <td>10, 30, 60, 120</td>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_RETRY_COUNT</td>
+                        <td>재시도 횟수</td>
+                        <td>3</td>
+                        <td>1, 3, 5, 10</td>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_WINDOW_TITLE</td>
+                        <td>ChatGPT 창 제목 패턴</td>
+                        <td>ChatGPT</td>
+                        <td>"ChatGPT.*", "OpenAI.*"</td>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_DEBUG</td>
+                        <td>디버그 모드</td>
+                        <td>false</td>
+                        <td>true, false</td>
+                    </tr>
+                    <tr>
+                        <td>WINDOWS_CHATGPT_MCP_AUTOMATION_DELAY</td>
+                        <td>자동화 지연 시간(ms)</td>
+                        <td>100</td>
+                        <td>50, 100, 200, 500</td>
+                    </tr>
+                </table>
+                
+                <h4>🎛️ 고급 설정 예시</h4>
+                <div class="code-block">{
+  "mcpServers": {
+    "windows-chatgpt-advanced": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server", "--advanced"],
+      "cwd": "C:/tools/windows-chatgpt-mcp",
+      "env": {
+        "PYTHONPATH": "C:/tools/windows-chatgpt-mcp/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "DEBUG",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "60",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "5",
+        "WINDOWS_CHATGPT_MCP_WINDOW_TITLE": "ChatGPT.*",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "true",
+        "WINDOWS_CHATGPT_MCP_AUTOMATION_DELAY": "200",
+        "WINDOWS_CHATGPT_MCP_MAX_MESSAGE_LENGTH": "4000",
+        "WINDOWS_CHATGPT_MCP_RESPONSE_BUFFER_SIZE": "8192"
+      }
+    }
+  }
+}</div>
+                
+                <h3>📊 성능 최적화</h3>
+                
+                <h4>⚡ 속도 최적화</h4>
+                <div class="success">
+                    <ul>
+                        <li><strong>창 관리:</strong> ChatGPT 창을 항상 보이고 방해받지 않게 유지</li>
+                        <li><strong>시스템 리소스:</strong> 불필요한 애플리케이션 종료</li>
+                        <li><strong>메시지 길이:</strong> 가능한 경우 짧은 메시지 사용</li>
+                        <li><strong>대화 관리:</strong> 정기적으로 대화 초기화</li>
+                        <li><strong>자동화 지연:</strong> 시스템 성능에 맞게 지연 시간 조정</li>
+                    </ul>
+                </div>
+                
+                <h4>🛡️ 안정성 향상</h4>
+                <div class="info">
+                    <ul>
+                        <li><strong>시스템 모니터링:</strong> CPU, 메모리 사용량 확인</li>
+                        <li><strong>애플리케이션 상태:</strong> ChatGPT 최신 버전 유지</li>
+                        <li><strong>네트워크 연결:</strong> 안정적인 인터넷 연결 보장</li>
+                        <li><strong>오류 처리:</strong> 적절한 타임아웃 및 재시도 설정</li>
+                        <li><strong>로그 모니터링:</strong> 정기적인 로그 파일 확인</li>
+                    </ul>
+                </div>
+                
+                <h3>🔍 모니터링 및 디버깅</h3>
+                
+                <h4>실시간 모니터링</h4>
+                <div class="code-block"># 실시간 로그 모니터링
+python -m src.mcp_server --monitor
+
+# 성능 메트릭 확인
+python -m src.mcp_server --metrics
+
+# 상세 디버그 정보
+python -m src.mcp_server --debug --verbose</div>
+                
+                <h4>📈 성능 메트릭</h4>
+                <p>도구는 다음 메트릭을 추적합니다:</p>
+                <ul>
+                    <li>응답 시간 (평균, 최소, 최대)</li>
+                    <li>성공/실패 비율</li>
+                    <li>오류 카테고리별 통계</li>
+                    <li>리소스 사용량 (CPU, 메모리)</li>
+                    <li>네트워크 지연 시간</li>
+                </ul>
+                
+                <h3>🔌 확장 및 커스터마이징</h3>
+                
+                <h4>플러그인 시스템</h4>
+                <div class="warning">
+                    <p><strong>개발 중인 기능:</strong> 향후 버전에서 플러그인 시스템이 제공될 예정입니다.</p>
+                </div>
+                
+                <h4>커스텀 자동화 스크립트</h4>
+                <div class="code-block"># 커스텀 자동화 스크립트 예시
+python examples/automation_scripts/custom_automation.py
+
+# 설정 검증 스크립트
+python examples/validation_examples/validate_setup.py
+
+# 성능 테스트 스크립트
+python examples/automation_scripts/performance_test.py</div>
+                
+                <h3>🔒 보안 고려사항</h3>
+                
+                <h4>데이터 보안</h4>
+                <div class="error">
+                    <ul>
+                        <li><strong>로컬 처리:</strong> 모든 메시지는 ChatGPT 데스크톱 앱을 통해 로컬에서 처리</li>
+                        <li><strong>임시 저장:</strong> MCP 서버는 대화 데이터를 영구 저장하지 않음</li>
+                        <li><strong>로그 관리:</strong> 민감한 정보 보호를 위한 로그 레벨 설정</li>
+                        <li><strong>네트워크 보안:</strong> 로컬 통신만 사용, 외부 서버로 데이터 전송 없음</li>
+                    </ul>
+                </div>
+                
+                <h4>시스템 보안</h4>
+                <div class="warning">
+                    <ul>
+                        <li><strong>권한 관리:</strong> 최소 필요 권한으로 실행</li>
+                        <li><strong>방화벽 설정:</strong> 필요한 경우에만 방화벽 예외 추가</li>
+                        <li><strong>바이러스 백신:</strong> 신뢰할 수 있는 소스에서만 다운로드</li>
+                        <li><strong>업데이트:</strong> 정기적인 보안 업데이트 적용</li>
+                    </ul>
+                </div>
+            </section>
         
             <section id="troubleshooting" class="section troubleshooting">
                 <h2>문제해결</h2>
@@ -1136,8 +1535,58 @@ python scripts/verify_dependencies.py</div>
         </main>
         
         <footer class="footer">
-            <p>&copy; 2024 Windows ChatGPT MCP Tool. MIT License.</p>
-            <p>Claude와 ChatGPT를 연결하여 더 나은 AI 경험을 제공합니다.</p>
+            <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">🚀 Windows ChatGPT MCP Tool</h4>
+                        <p>Claude와 ChatGPT를 연결하여 더 나은 AI 경험을 제공합니다.</p>
+                        <p style="margin-top: 1rem;">
+                            <a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp" target="_blank" style="color: #3498db; text-decoration: none;">
+                                📁 GitHub 저장소
+                            </a>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">📚 문서</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 0.5rem 0;"><a href="../README.md" style="color: #ecf0f1; text-decoration: none;">📖 사용자 가이드</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="../INSTALL.md" style="color: #ecf0f1; text-decoration: none;">💾 설치 가이드</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="../TROUBLESHOOTING.md" style="color: #ecf0f1; text-decoration: none;">🔍 문제해결</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="API_REFERENCE.md" style="color: #ecf0f1; text-decoration: none;">📋 API 참조</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">🛠️ 빠른 시작</h4>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 5px; font-family: monospace; font-size: 0.9rem;">
+                            <div>git clone https://github.com/kyungsuk-kim/windows-chatgpt-mcp.git</div>
+                            <div>cd windows-chatgpt-mcp</div>
+                            <div>python scripts/install.py</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #3498db; margin-bottom: 1rem;">💬 지원</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 0.5rem 0;"><a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp/issues" target="_blank" style="color: #ecf0f1; text-decoration: none;">🐛 버그 신고</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp/discussions" target="_blank" style="color: #ecf0f1; text-decoration: none;">💭 토론</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="https://github.com/kyungsuk-kim/windows-chatgpt-mcp/releases" target="_blank" style="color: #ecf0f1; text-decoration: none;">📦 릴리스</a></li>
+                            <li style="margin: 0.5rem 0;"><a href="../CONTRIBUTING.md" style="color: #ecf0f1; text-decoration: none;">🤝 기여하기</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; text-align: center;">
+                    <p>&copy; 2024 Windows ChatGPT MCP Tool. MIT License.</p>
+                    <p style="margin-top: 0.5rem; opacity: 0.8;">
+                        원본 프로젝트: <a href="https://github.com/syedazharmbnr1/claude-chatgpt-mcp" target="_blank" style="color: #3498db;">claude-chatgpt-mcp</a> by syedazharmbnr1
+                    </p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                        🌟 이 도구가 유용하다면 GitHub에서 스타를 눌러주세요!
+                    </p>
+                </div>
+            </div>
         </footer>
     </div>
     
@@ -1156,11 +1605,27 @@ python scripts/verify_dependencies.py</div>
             });
         });
         
-        // 현재 섹션 하이라이트
+        // 스크롤 이벤트 처리
         window.addEventListener('scroll', function() {
             const sections = document.querySelectorAll('.section');
             const navLinks = document.querySelectorAll('.nav a');
+            const backToTop = document.getElementById('backToTop');
+            const progressBar = document.getElementById('progressBar');
             
+            // 진행률 바 업데이트
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+            
+            // 맨 위로 버튼 표시/숨김
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            // 현재 섹션 하이라이트
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
@@ -1177,6 +1642,72 @@ python scripts/verify_dependencies.py</div>
                 }
             });
         });
+        
+        // 맨 위로 버튼 클릭 이벤트
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 코드 블록 복사 기능
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.style.position = 'relative';
+            block.style.cursor = 'pointer';
+            
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = '📋';
+            copyButton.style.position = 'absolute';
+            copyButton.style.top = '0.5rem';
+            copyButton.style.right = '0.5rem';
+            copyButton.style.background = 'rgba(255,255,255,0.2)';
+            copyButton.style.border = 'none';
+            copyButton.style.borderRadius = '3px';
+            copyButton.style.padding = '0.25rem 0.5rem';
+            copyButton.style.cursor = 'pointer';
+            copyButton.style.fontSize = '0.8rem';
+            copyButton.style.opacity = '0.7';
+            copyButton.title = '클립보드에 복사';
+            
+            copyButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const text = block.textContent;
+                navigator.clipboard.writeText(text).then(function() {
+                    copyButton.innerHTML = '✅';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '📋';
+                    }, 2000);
+                }).catch(function() {
+                    copyButton.innerHTML = '❌';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '📋';
+                    }, 2000);
+                });
+            });
+            
+            block.appendChild(copyButton);
+        });
+        
+        // 페이지 로드 완료 시 애니메이션
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+        
+        // 다크 모드 토글 (향후 기능)
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+        
+        // 로컬 스토리지에서 다크 모드 설정 로드
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
     </script>
 </body>
 </html>
