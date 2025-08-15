@@ -1,5 +1,9 @@
 # Windows ChatGPT MCP Tool
 
+> ⚠️ **NOTICE: PRE-TESTING VERSION** ⚠️  
+> This tool is currently in development and has **NOT been fully tested**. Use at your own risk.  
+> Comprehensive testing and validation are planned before the first stable release.
+
 A Model Context Protocol (MCP) server that enables Claude Desktop and VS Code Claude CLI to interact with ChatGPT on Windows 11 systems.
 
 ## Overview
