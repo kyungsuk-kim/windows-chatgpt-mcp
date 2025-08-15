@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "windows-chatgpt": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server"],
+      "cwd": "${env:TEAM_MCP_PATH}/windows-chatgpt-mcp",
+      "env": {
+        "PYTHONPATH": "${env:TEAM_MCP_PATH}/windows-chatgpt-mcp/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "${env:MCP_LOG_LEVEL}",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "${env:MCP_TIMEOUT}",
+        "WINDOWS_CHATGPT_MCP_WINDOW_TITLE": "${env:MCP_WINDOW_TITLE}",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "${env:MCP_DEBUG_MODE}"
+      }
+    }
+  }
+}

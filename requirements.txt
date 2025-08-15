@@ -1,0 +1,20 @@
+# Core MCP dependencies
+mcp>=1.0.0
+
+# Windows automation dependencies
+pyautogui>=0.9.54
+pygetwindow>=0.0.9
+pywin32>=306
+
+# Additional utility dependencies
+typing-extensions>=4.0.0
+dataclasses-json>=0.6.0
+asyncio-mqtt>=0.16.0
+pyperclip>=1.8.2
+psutil>=5.9.0
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0

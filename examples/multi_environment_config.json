@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "chatgpt-dev": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server", "--debug"],
+      "cwd": "C:/dev/windows-chatgpt-mcp",
+      "env": {
+        "PYTHONPATH": "C:/dev/windows-chatgpt-mcp/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "DEBUG",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "1",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "60"
+      }
+    },
+    "chatgpt-staging": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server"],
+      "cwd": "C:/staging/windows-chatgpt-mcp",
+      "env": {
+        "PYTHONPATH": "C:/staging/windows-chatgpt-mcp/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "INFO",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "45"
+      }
+    },
+    "chatgpt-prod": {
+      "command": "windows-chatgpt-mcp",
+      "args": [],
+      "env": {
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "ERROR",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "30"
+      }
+    }
+  }
+}

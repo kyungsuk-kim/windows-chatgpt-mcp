@@ -1,0 +1,19 @@
+{
+  "claude.mcpServers": {
+    "windows-chatgpt": {
+      "command": "C:/Python39/python.exe",
+      "args": ["-m", "src.mcp_server"],
+      "cwd": "C:/Program Files/WindowsChatGPTMCP",
+      "env": {
+        "PYTHONPATH": "C:/Program Files/WindowsChatGPTMCP/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "INFO",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "30"
+      }
+    }
+  },
+  "claude.enableMcp": true,
+  "claude.mcpTimeout": 30000,
+  "claude.mcpLogLevel": "info",
+  "claude.mcpAutoStart": true,
+  "claude.mcpHealthCheck": true
+}

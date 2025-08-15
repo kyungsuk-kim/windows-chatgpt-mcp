@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "windows-chatgpt": {
+      "command": "windows-chatgpt-mcp",
+      "args": [],
+      "env": {
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "INFO",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "30",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "3"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "windows-chatgpt-dev": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server", "--debug"],
+      "cwd": "C:/dev/windows-chatgpt-mcp",
+      "env": {
+        "PYTHONPATH": "C:/dev/windows-chatgpt-mcp/src",
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "DEBUG",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "1",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "60",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "5",
+        "WINDOWS_CHATGPT_MCP_WINDOW_TITLE": "ChatGPT",
+        "WINDOWS_CHATGPT_MCP_PERFORMANCE_MONITORING": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "team_name": "Development Team",
+  "shared_path": "C:/shared/tools",
+  "python_path": "C:/Python39/python.exe",
+  "contact": "devops@company.com",
+  "environments": {
+    "development": {
+      "description": "Development environment with debug logging",
+      "env_vars": {
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "DEBUG",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "1",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "60",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "5"
+      },
+      "timeout": 60000
+    },
+    "staging": {
+      "description": "Staging environment for testing",
+      "env_vars": {
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "INFO",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "0",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "45",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "3"
+      },
+      "timeout": 45000
+    },
+    "production": {
+      "description": "Production environment with minimal logging",
+      "env_vars": {
+        "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "WARNING",
+        "WINDOWS_CHATGPT_MCP_DEBUG": "0",
+        "WINDOWS_CHATGPT_MCP_TIMEOUT": "30",
+        "WINDOWS_CHATGPT_MCP_RETRY_COUNT": "2"
+      },
+      "timeout": 30000
+    }
+  }
+}

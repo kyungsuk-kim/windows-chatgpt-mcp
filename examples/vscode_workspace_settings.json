@@ -1,0 +1,17 @@
+{
+  "settings": {
+    "claude.mcpServers": {
+      "windows-chatgpt": {
+        "command": "python",
+        "args": ["-m", "src.mcp_server"],
+        "cwd": "${workspaceFolder}/windows-chatgpt-mcp",
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}/windows-chatgpt-mcp/src",
+          "WINDOWS_CHATGPT_MCP_LOG_LEVEL": "DEBUG"
+        }
+      }
+    },
+    "claude.enableMcp": true,
+    "claude.mcpTimeout": 45000
+  }
+}
