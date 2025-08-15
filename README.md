@@ -6,6 +6,8 @@ A Model Context Protocol (MCP) server that enables Claude Desktop and VS Code Cl
 
 This tool provides a bridge between Claude and ChatGPT on Windows, allowing you to leverage ChatGPT functionality within your Claude workflow through the MCP protocol. Get the best of both AI systems by combining Claude's analytical capabilities with ChatGPT's knowledge and conversational abilities.
 
+**Note**: This is a Windows adaptation of the original [claude-chatgpt-mcp](https://github.com/syedazharmbnr1/claude-chatgpt-mcp) tool for macOS, redesigned with Windows-native automation and enhanced features.
+
 ### Key Features
 
 - 🔗 **Seamless Integration** - Connect Claude with ChatGPT through MCP protocol
@@ -330,9 +332,22 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Built on the Model Context Protocol (MCP) standard
-- Uses Windows automation libraries for ChatGPT integration
-- Inspired by the macOS ChatGPT MCP tool
+This Windows ChatGPT MCP tool is based on the excellent work by [syedazharmbnr1](https://github.com/syedazharmbnr1) and their [claude-chatgpt-mcp](https://github.com/syedazharmbnr1/claude-chatgpt-mcp) project for macOS. We adapted their innovative approach to create a Windows-native version with enhanced automation capabilities.
+
+### Credits
+
+- **Original Project**: [claude-chatgpt-mcp](https://github.com/syedazharmbnr1/claude-chatgpt-mcp) by [syedazharmbnr1](https://github.com/syedazharmbnr1)
+- **Platform**: Adapted from macOS to Windows with Windows-specific automation
+- **MCP Protocol**: Built on the Model Context Protocol (MCP) standard
+- **Windows Integration**: Uses Windows automation libraries for ChatGPT desktop app integration
+
+### Key Adaptations for Windows
+
+- Windows-native automation using `pyautogui` and `pygetwindow`
+- Windows-specific window management and detection
+- Enhanced error handling for Windows environment
+- Windows registry and file system integration
+- Comprehensive Windows installation and deployment support
 
 ---
 
