@@ -34,7 +34,7 @@ pip install windows-chatgpt-mcp
 
 #### Option 2: Standalone Executable
 
-1. Download `windows-chatgpt-mcp.exe` from the [releases page](https://github.com/example/windows-chatgpt-mcp/releases)
+1. Download `windows-chatgpt-mcp.exe` from the [releases page](https://github.com/kyungsuk-kim/windows-chatgpt-mcp/releases)
 2. Place the executable in your desired directory
 3. Run directly without Python installation required
 
@@ -42,7 +42,7 @@ pip install windows-chatgpt-mcp
 
 1. **Clone the repository:**
    ```cmd
-   git clone https://github.com/example/windows-chatgpt-mcp.git
+   git clone https://github.com/kyungsuk-kim/windows-chatgpt-mcp.git
    cd windows-chatgpt-mcp
    ```
 
